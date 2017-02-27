@@ -1,8 +1,8 @@
 reach5('on', 'authenticated', function(authResult) {
   console.log(authResult);
-  $.jStorage.set("idToken", authResult.idToken);
+  $.jStorage.set("accessToken", authResult.accessToken);
 
-  reach5('getUser', authResult.idToken, { fields: 'name,email' }, function(err, user) {
+  reach5('getUser', { accessToken: authResult.accessToken, fields: 'name,email' }, function(err, user) {
     if (err) {
       console.error(err);
       return;
@@ -69,8 +69,8 @@ var Demo = (function() {
       $('li.logged').hide();
       $('li.retour').show();
 
-      var idToken = $.jStorage.get("idToken");
-      if (idToken) {
+      var accessToken = $.jStorage.get("accessToken");
+      if (accessToken) {
         reach5('showProfileEditor', {
           container: 'reach5-widget',
           showLabels: true,
@@ -80,11 +80,12 @@ var Demo = (function() {
             "email",
             "birthdate"
           ],
-          idToken
+          accessToken
         });
 
         reach5('on', 'profile_updated', function() {
-            reach5('getUser', idToken, {
+          reach5('getUser', {
+                accessToken: accessToken,
                 fields: 'id,email,name,gender,birthdate,last_login_provider,created_at,updated_at'
             },
             function(err, user) {
@@ -106,7 +107,7 @@ var Demo = (function() {
 
   function logout() {
     $.jStorage.deleteKey("user");
-    $.jStorage.deleteKey("idToken");
+    $.jStorage.deleteKey("accessToken");
     reach5('logout');
   }
 
