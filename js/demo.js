@@ -1,17 +1,10 @@
 reach5('on', 'authenticated', function(authResult) {
   console.log(authResult);
   $.jStorage.set("accessToken", authResult.accessToken);
+  $.jStorage.set("user", authResult.idTokenPayload);
 
-  reach5('getUser', { accessToken: authResult.accessToken, fields: 'name,email' }, function(err, user) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(user);
-    $.jStorage.set("user", user);
-    window.history.replaceState("", document.title,"/"),
-    Demo.home();
-  });
+  window.history.replaceState("", document.title,"/"),
+  Demo.home();
 });
 
 var Demo = (function() {
@@ -52,13 +45,9 @@ var Demo = (function() {
       reach5('showAuth', {
         initialScreen: is,
         container: 'reach5-widget',
-        signupFields: [
-            "given_name",
-            "family_name",
-            "email",
-            "password",
-            "password_confirmation"
-          ]
+        auth: {
+          origin: 'Homepage'
+        }
       });
     });
   }

@@ -1,3 +1,0 @@
-var reachfive = {
-  domain: ""
-}

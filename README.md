@@ -8,7 +8,7 @@ You will need an http server to run this page.
 
 ## Configure
 
-Copy `js/env.example.js` to `js/env.js` and replace the values for `domain` with your ReachFive app domain.
+**Change YOUR_DOMAIN in index.html** file with your own ReachFive Domain.
 
 These value is available in your ReachFive account settings.
 
