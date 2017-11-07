@@ -4,10 +4,10 @@ reach5('on', 'authenticated', function(authResult) {
   $.jStorage.set("user", authResult.idTokenPayload);
 
   window.history.replaceState("", document.title,"/"),
-  Demo.home();
+  App.home();
 });
 
-var Demo = (function() {
+var App = (function() {
   var $m;
   function init() {
       $m = $('#main');
@@ -44,10 +44,7 @@ var Demo = (function() {
 
       reach5('showAuth', {
         initialScreen: is,
-        container: 'reach5-widget',
-        auth: {
-          origin: 'Homepage'
-        }
+        container: 'reach5-widget'
       });
     });
   }
@@ -65,9 +62,7 @@ var Demo = (function() {
           showLabels: true,
           fields: [
             "given_name",
-            "family_name",
-            "email",
-            "birthdate"
+            "family_name"
           ],
           accessToken
         });
@@ -75,7 +70,7 @@ var Demo = (function() {
         reach5('on', 'profile_updated', function() {
           reach5('getUser', {
                 accessToken: accessToken,
-                fields: 'id,email,name,gender,birthdate,last_login_provider,created_at,updated_at'
+                fields: 'id,email,name,gender,last_login_provider,created_at,updated_at'
             },
             function(err, user) {
               if (err) {
@@ -107,5 +102,5 @@ var Demo = (function() {
 })();
 
 $(document).ready(function () {
-    Demo.init();
+    App.init();
 });
